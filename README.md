@@ -3,6 +3,8 @@ Role Name
 
 A brief description of the role goes here.
 
+Alternative to https://github.com/geerlingguy/ansible-role-dotfiles.git, with a stow workflow
+
 Requirements
 ------------
 
