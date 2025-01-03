@@ -2,7 +2,7 @@
 ---
 # defaults file for role-dotfiles
 dotfiles_repo: "https://github.com/maccracken/dotfiles.git"
-dotfiles_repo_version: master
+dotfiles_repo_version: main
 dotfiles_repo_accept_hostkey: false
 dotfiles_repo_local_destination: "~/Repos/dotfiles"
 
