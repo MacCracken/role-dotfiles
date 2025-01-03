@@ -19,8 +19,8 @@
 
 - name: Display Results
   debug:
-    msg: "{{ item.path }}"
-  loop: "{{ found_matches.results[0].files }}"
+    msg: "{{ item }}"
+  loop: "{{ found_matches.results[0].files.path }}"
   #when: find_matches is not defined
 
 # - name: Ensure all configured dotfiles are links.
