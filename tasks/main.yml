@@ -21,7 +21,7 @@
   debug:
     var: "{{ item }}"
   with_items: "{{ found_matches }}"
-  when: find_matches is not defined
+  #when: find_matches is not defined
 
 # - name: Ensure all configured dotfiles are links.
 #   command: "ls -F {{ dotfiles_home }}/{{ item }}"
