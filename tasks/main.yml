@@ -11,7 +11,7 @@
 - name: "Find dotfiles folder files"
   ansible.builtin.find:
     paths: "{{ item }}"
-  with_items: "{{ dotfiles_folders }}"
+  with_items: "{{ dotfiles_home }}/{{ dotfiles_folders }}"
   register: results
 
 - name: Display DNS Results
