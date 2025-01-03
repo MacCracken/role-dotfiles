@@ -19,7 +19,7 @@
 
 - name: Display Results
   debug:
-    var: results
+    var: results.path
 
 # - name: Ensure all configured dotfiles are links.
 #   command: "ls -F {{ dotfiles_home }}/{{ item }}"
