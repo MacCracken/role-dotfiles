@@ -10,14 +10,14 @@
 
 - name: "Find dotfiles folder files"
   ansible.builtin.find:
-    paths: "{{ item }}"
-  with_items: "{{ dotfiles_repo_local_destination }}/{{ dotfiles_folders }}"
+    paths: "{{ dotfiles_repo_local_destination }}/{{ item }}"
+  with_items: "{{ dotfiles_folders }}"
   register: results
 
 - name: Display DNS Results
   debug:
     msg:
-      - results
+      - "{{ results }}"
 
 # - name: Ensure all configured dotfiles are links.
 #   command: "ls -F {{ dotfiles_home }}/{{ item }}"
