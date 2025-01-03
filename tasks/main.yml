@@ -19,7 +19,7 @@
 
 - name: Display Results
   debug:
-    msg: "{{ item }}"
+    var: "{{ item }}"
   with_items: "{{ found_matches }}"
   when: find_matches is not defined
 
