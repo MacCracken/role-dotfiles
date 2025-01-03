@@ -19,9 +19,9 @@
 
 - name: Display Results
   debug:
-    msg: "{{ item }}"
+    msg: "{{ item.path }}"
   with_items: "{{ found_matches.results[0].files }}"
-  #when: find_matches is not defined
+  when: find_matches is defined
 
 # - name: Ensure all configured dotfiles are links.
 #   command: "ls -F {{ dotfiles_home }}/{{ item }}"
