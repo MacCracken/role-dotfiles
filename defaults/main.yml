@@ -7,7 +7,9 @@ dotfiles_repo_accept_hostkey: false
 dotfiles_repo_local_destination: "~/Repos/dotfiles"
 
 dotfiles_home: "~"
+dotfiles_folders:
+  - zsh
 dotfiles_files:
-  - zsh/.zshrc
-  - zsh/.config/zsh
+  - .macos
+  - .testtmp
 

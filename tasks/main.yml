@@ -8,6 +8,17 @@
     accept_hostkey: "{{ dotfiles_repo_accept_hostkey }}"
   become: false
 
+- name: "Find dotfiles folder files"
+  ansible.builtin.find:
+    paths: "{{ item }}"
+  with_items: "{{ dotfiles_folder }}"
+  register: results
+
+- name: Display DNS Results
+  debug:
+    msg:
+      - results
+
 # - name: Ensure all configured dotfiles are links.
 #   command: "ls -F {{ dotfiles_home }}/{{ item }}"
 #   register: existing_dotfile_info
