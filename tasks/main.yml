@@ -20,7 +20,7 @@
 - name: Display Results
   debug:
     msg: "{{ item }}"
-  loop: "{{ found_matches }}"
+  loop: "{{ found_matches.results[0] }}"
   #when: find_matches is not defined
 
 # - name: Ensure all configured dotfiles are links.
