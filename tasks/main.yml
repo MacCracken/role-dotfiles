@@ -11,6 +11,7 @@
 - name: "Find dotfiles folder files"
   ansible.builtin.find:
     paths: "{{ dotfiles_repo_local_destination }}/{{ item }}"
+    recurse: yes
   with_items: "{{ dotfiles_folders }}"
   register: results
 
