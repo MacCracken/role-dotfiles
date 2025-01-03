@@ -15,11 +15,12 @@
     hidden: true
     recurse: yes
   with_items: "{{ dotfiles_folders }}"
-  register: results
+  register: found_files
 
 - name: Display Results
   debug:
-    var: results.path
+    msg: "{{ item.path }}"
+  with_items: "{{ found_files }}"
 
 # - name: Ensure all configured dotfiles are links.
 #   command: "ls -F {{ dotfiles_home }}/{{ item }}"
