@@ -21,11 +21,11 @@
   set_fact:
     file_list: "{{ found_matches.results | map(attribute='files') | list }}"
 
-- name: Display Results
+- name: Display Results for testing purposes
   debug:
     msg: "{{ item.path }}"
   with_items: "{{ file_list }}"
-  #when: found_matches.results[0].matched > 0
+  when: file_list.length > 0
 
 # - name: Ensure all configured dotfiles are links.
 #   command: "ls -F {{ dotfiles_home }}/{{ item }}"
