@@ -20,6 +20,7 @@
 - name: Establish dotfile list
   set_fact:
     file_list: "{{ found_matches.results | map(attribute='files') | list }}"
+  when: found_matches | length > 0
 
 - name: Display Results for testing purposes
   debug:
