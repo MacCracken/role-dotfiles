@@ -17,10 +17,14 @@
   with_items: "{{ dotfiles_folders }}"
   register: found_matches
 
+- name: Establish dotfile list
+  set_fact:
+    file_list: "{{ found_matches.results | map(attribute='files') | list }}"
+
 - name: Display Results
   debug:
     msg: "{{ item.path }}"
-  with_items: "{{ found_matches.results | map(attribute='files') | list }}"
+  with_items: "{{ file_list }}"
   #when: found_matches.results[0].matched > 0
 
 # - name: Ensure all configured dotfiles are links.
