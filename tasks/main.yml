@@ -22,11 +22,17 @@
     file_list: "{{ found_matches.results | map(attribute='files') | list }}"
   when: found_matches.results | length > 0
 
-- name: Display Results for testing purposes
+- name: Display Folder Results for testing purposes
   debug:
     msg: "{{ item.path }}"
   with_items: "{{ file_list }}"
   when: found_matches.results | length > 0
+  
+- name: Display Files Results for testing purposes
+  debug:
+    msg: "{{ item }}"
+  with_items: "{{ dotfiles_files }}"
+  when: dotfiles_files | length > 0
 
 # - name: Ensure all configured dotfiles are links.
 #   command: "ls -F {{ dotfiles_home }}/{{ item }}"
