@@ -26,7 +26,7 @@
   debug:
     msg: "{{ item.path }}"
   with_items: "{{ file_list }}"
-  when: file_list | length > 0
+  when: found_matches.results | length > 0
 
 # - name: Ensure all configured dotfiles are links.
 #   command: "ls -F {{ dotfiles_home }}/{{ item }}"
