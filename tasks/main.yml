@@ -32,6 +32,7 @@
   debug:
     msg: "{{ item.path | replace(destination_absolute, '') }}"
   with_items: "{{ file_list }}"
+  no_log: true
   when: found_matches.results | length > 0
   
 - name: Display Files Results for testing purposes
