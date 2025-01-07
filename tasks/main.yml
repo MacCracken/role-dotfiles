@@ -4,7 +4,12 @@
   ansible.builtin.find:
     paths: "{{ dotfiles_repo_local_destination }}"
     file_type: directory
+    recurse: no
   register: destination_absolute
+
+- name: Display Folder Results for testing purposes
+  debug:
+    msg: "{{ destination_absolute.path }}"
 
 - name: Ensure dotfiles repository is cloned locally.
   git:
@@ -30,7 +35,7 @@
 
 - name: Display Folder Results for testing purposes
   debug:
-    msg: "{{destination_absolute}},{{ item.path | replace(destination_absolute, '') }}"
+    msg: "{{ item.path | replace(destination_absolute, '') }}"
   with_items: "{{ file_list }}"
   when: found_matches.results | length > 0
   
