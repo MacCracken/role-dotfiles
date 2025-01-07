@@ -1,16 +1,22 @@
 #SPDX-License-Identifier: MIT-0
 ---
+- name: "Get dotfiles local destination absolute path."
+  ansible.builtin.find:
+    paths: "{{ dotfiles_repo_local_destination }}"
+    file_type: directory
+  register: destination_absolute
+
 - name: Ensure dotfiles repository is cloned locally.
   git:
     repo: "{{ dotfiles_repo }}"
-    dest: "{{ dotfiles_repo_local_destination }}"
+    dest: "{{ destination_absolute }}"
     version: "{{ dotfiles_repo_version }}"
     accept_hostkey: "{{ dotfiles_repo_accept_hostkey }}"
   become: false
 
 - name: "Find dotfiles folder files"
   ansible.builtin.find:
-    paths: "{{ dotfiles_repo_local_destination }}/{{ item }}/"
+    paths: "{{ destination_absolute }}/{{ item }}/"
     file_type: file
     hidden: true
     recurse: yes
@@ -24,7 +30,7 @@
 
 - name: Display Folder Results for testing purposes
   debug:
-    msg: "{{dotfiles_repo_local_destination}}, {{ item.path | replace(dotfiles_repo_local_destination, '') }}"
+    msg: "{{ item.path | replace(destination_absolute, '') }}"
   with_items: "{{ file_list }}"
   when: found_matches.results | length > 0
   
