@@ -19,34 +19,41 @@
     accept_hostkey: "{{ dotfiles_repo_accept_hostkey }}"
   become: false
 
-- name: Find dotfiles folder files.
-  ansible.builtin.find:
-    paths: "{{ destination_abs }}/{{ item }}/"
-    file_type: file
-    hidden: true
-    recurse: yes
+- name: Testing stow
+  stow:
+    state: latest
+    package: '{{ item }}'
+    dir: "{{ destination_abs }}"
   with_items: "{{ dotfiles_folders }}"
-  register: found_matches
+   
+# - name: Find dotfiles folder files.
+#   ansible.builtin.find:
+#     paths: "{{ destination_abs }}/{{ item }}/"
+#     file_type: file
+#     hidden: true
+#     recurse: yes
+#   with_items: "{{ dotfiles_folders }}"
+#   register: found_matches
 
-- name: Establish dotfile list.
-  set_fact:
-    file_list: "{{ found_matches.results | map(attribute='files') | list }}"
-  when: found_matches.results | length > 0
+# - name: Establish dotfile list.
+#   set_fact:
+#     file_list: "{{ found_matches.results | map(attribute='files') | list }}"
+#   when: found_matches.results | length > 0
 
-- name: test
-  debug:
-    msg: "{{ item.0.path | replace(\"{{destination_abs}}/{{item.1}}/\" , '') }}"
-  loop: "{{ file_list | dotfiles_folders }}"
-  loop_control:
-    label: "{{ item.path }}"
-  when: found_matches.results | length > 0
+# - name: test
+#   debug:
+#     msg: "{{ item.0.path | replace(\"{{destination_abs}}/{{item.1}}/\" , '') }}"
+#   loop: "{{ file_list | dotfiles_folders }}"
+#   loop_control:
+#     label: "{{ item.path }}"
+#   when: found_matches.results | length > 0
 
   
-- name: Display Files Results for testing purposes
-  debug:
-    msg: "{{ item }}"
-  with_items: "{{ dotfiles_files }}"
-  when: dotfiles_files | length > 0
+# - name: Display Files Results for testing purposes
+#   debug:
+#     msg: "{{ item }}"
+#   with_items: "{{ dotfiles_files }}"
+#   when: dotfiles_files | length > 0
 
 # - name: Ensure all configured dotfiles are links.
 #   command: "ls -F {{ dotfiles_home }}/{{ item }}"
