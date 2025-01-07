@@ -1,12 +1,12 @@
 #SPDX-License-Identifier: MIT-0
 ---
-- name: Ensure stow and git are installed
-  homebrew:
-    name:
-      - stow
-      - git
-    state: present
-  become: true
+# - name: Ensure stow and git are installed
+#   homebrew:
+#     name:
+#       - stow
+#       - git
+#     state: present
+#   become: true
 
 - name: Get absolute folder path for local repo destination.
   command:
