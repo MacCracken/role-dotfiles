@@ -25,7 +25,7 @@
 - name: Display Folder Results for testing purposes
   debug:
     msg: "{{ item }}"
-  with_items: "{{ file_list | map(attribute='path') | list }}"
+  with_items: "{{ file_list.files | map(attribute='path') | list }}"
   when: found_matches.results | length > 0
   
 - name: Display Files Results for testing purposes
