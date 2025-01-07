@@ -1,6 +1,6 @@
 #SPDX-License-Identifier: MIT-0
 ---
-- name: Get absolute folder path for local repo destination
+- name: Get absolute folder path for local repo destination.
   ansible.builtin.command:
     cmd: "readlink -f {{ dotfiles_repo_local_destination }}"
   register: destination_absolute_readlink
@@ -11,10 +11,6 @@
     destination_abs: "{{ destination_absolute_readlink.stdout }}"
   changed_when: False
 
-- name: Display Folder Results for testing purposes
-  debug:
-    msg: "{{ destination_abs }}"
-
 - name: Ensure dotfiles repository is cloned locally.
   git:
     repo: "{{ dotfiles_repo }}"
@@ -23,31 +19,32 @@
     accept_hostkey: "{{ dotfiles_repo_accept_hostkey }}"
   become: false
 
-# - name: "Find dotfiles folder files"
-#   ansible.builtin.find:
-#     paths: "{{ dotfiles_repo_local_destination }}/{{ item }}/"
-#     file_type: file
-#     hidden: true
-#     recurse: yes
-#   with_items: "{{ dotfiles_folders }}"
-#   register: found_matches
+- name: Find dotfiles folder files.
+  ansible.builtin.find:
+    paths: "{{ destination_abs }}/{{ item }}/"
+    file_type: file
+    hidden: true
+    recurse: yes
+  with_items: "{{ dotfiles_folders }}"
+  register: found_matches
 
-# - name: Establish dotfile list
-#   set_fact:
-#     file_list: "{{ found_matches.results | map(attribute='files') | list }}"
-#   when: found_matches.results | length > 0
+- name: Establish dotfile list.
+  set_fact:
+    file_list: "{{ found_matches.results | map(attribute='files') | list }}"
+  when: found_matches.results | length > 0
 
-# - name: Display Folder Results for testing purposes
-#   debug:
-#     msg: "{{ item.path | replace(destination_absolute, '') }}"
-#   with_items: "{{ file_list }}"
-#   when: found_matches.results | length > 0
+- name: Display Folder Results for testing purposes
+  debug:
+    msg: "{{ item.path | replace(destination_absolute, '') }}"
+  with_items: "{{ file_list }}"
+  no_log: true
+  when: found_matches.results | length > 0
   
-# - name: Display Files Results for testing purposes
-#   debug:
-#     msg: "{{ item }}"
-#   with_items: "{{ dotfiles_files }}"
-#   when: dotfiles_files | length > 0
+- name: Display Files Results for testing purposes
+  debug:
+    msg: "{{ item }}"
+  with_items: "{{ dotfiles_files }}"
+  when: dotfiles_files | length > 0
 
 # - name: Ensure all configured dotfiles are links.
 #   command: "ls -F {{ dotfiles_home }}/{{ item }}"
