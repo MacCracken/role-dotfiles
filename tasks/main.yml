@@ -1,7 +1,7 @@
 #SPDX-License-Identifier: MIT-0
 ---
 - name: Ensure stow and git are installed
-  package:
+  homebrew:
     name:
       - stow
       - git
