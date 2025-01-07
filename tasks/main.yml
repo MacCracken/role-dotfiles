@@ -24,8 +24,8 @@
 
 - name: Display Folder Results for testing purposes
   debug:
-    msg: "{{ item }}"
-  with_items: "{{ file_list.files | map(attribute='path') | list }}"
+    msg: "{{ item.path | replace(dotfiles_repo_local_destination, '') }}"
+  with_items: "{{ file_list }}"
   when: found_matches.results | length > 0
   
 - name: Display Files Results for testing purposes
