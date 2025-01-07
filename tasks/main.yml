@@ -36,7 +36,7 @@
 - name: test
   debug:
     msg: "{{ item.0.path | replace(\"{{destination_abs}}/{{item.1}}/\" , '') }}"
-  with_items: "{{ file_list | zip(dotfiles_folders) | list }}"
+  loop: "{{ file_list | dotfiles_folders }}"
   loop_control:
     label: "{{ item.path }}"
   when: found_matches.results | length > 0
