@@ -2,7 +2,7 @@
 ---
 - name: Display Folder Results for testing purposes
   debug:
-    msg: "{{ dotfiles_repo_local_destination | realpath }}"
+    msg: "{{ dotfiles_repo_local_destination | relpath }}"
 
 # - name: Ensure dotfiles repository is cloned locally.
 #   git:
