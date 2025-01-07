@@ -17,10 +17,6 @@
   register: absolute_readlinks
   changed_when: False
 
-- name: test
-  debug:
-    msg: "{{ absolute_readlinks }}"
-
 - name: Set absolute facts.
   set_fact:
     destination_abs: "{{ absolute_readlinks.results[0].stdout }}"
