@@ -24,7 +24,7 @@
 
 - name: Display Folder Results for testing purposes
   debug:
-    msg: "{{ item.path | replace('/Users/', '') }}"
+    msg: "{{ item.path | replace(dotfiles_repo_local_destination, '') }}"
   with_items: "{{ file_list }}"
   when: found_matches.results | length > 0
   
