@@ -37,7 +37,8 @@
   debug:
     msg: "{{ item.path | replace(destination_absolute, '') }}"
   with_items: "{{ file_list }}"
-  no_log: true
+  loop_control:
+    label: "{{ item.path }}"
   when: found_matches.results | length > 0
   
 - name: Display Files Results for testing purposes
