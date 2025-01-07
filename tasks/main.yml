@@ -24,7 +24,7 @@
 - name: Set absolute facts.
   set_fact:
     destination_abs: "{{ absolute_readlinks.results[0].stdout }}"
-    target_abs: "{{ absolute_readlinks[1].stdout }}"
+    target_abs: "{{ absolute_readlinks.results[1].stdout }}"
   changed_when: False
 
 - name: Ensure dotfiles repository is cloned locally.
