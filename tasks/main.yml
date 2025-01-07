@@ -38,64 +38,35 @@
     dir: "{{ destination_abs }}"
     target: "{{ target_abs }}"
   with_items: "{{ dotfiles_folders }}"
-   
-# - name: Find dotfiles folder files.
-#   ansible.builtin.find:
-#     paths: "{{ destination_abs }}/{{ item }}/"
-#     file_type: file
-#     hidden: true
-#     recurse: yes
-#   with_items: "{{ dotfiles_folders }}"
-#   register: found_matches
 
-# - name: Establish dotfile list.
-#   set_fact:
-#     file_list: "{{ found_matches.results | map(attribute='files') | list }}"
-#   when: found_matches.results | length > 0
+- name: Ensure all configured dotfiles are links.
+  command: "ls -F {{ dotfiles_home }}/{{ item }}"
+  register: existing_dotfile_info
+  failed_when: false
+  check_mode: false
+  changed_when: false
+  with_items: "{{ dotfiles_files }}"
 
-# - name: test
-#   debug:
-#     msg: "{{ item.0.path | replace(\"{{destination_abs}}/{{item.1}}/\" , '') }}"
-#   loop: "{{ file_list | dotfiles_folders }}"
-#   loop_control:
-#     label: "{{ item.path }}"
-#   when: found_matches.results | length > 0
+- name: Remove existing dotfiles file if a replacement is being linked.
+  file:
+    path: "{{ dotfiles_home }}/{{ dotfiles_files[item.0] }}"
+    state: absent
+  when: "'@' not in item.1.stdout"
+  with_indexed_items: "{{ existing_dotfile_info.results }}"
 
-  
-# - name: Display Files Results for testing purposes
-#   debug:
-#     msg: "{{ item }}"
-#   with_items: "{{ dotfiles_files }}"
-#   when: dotfiles_files | length > 0
+- name: Ensure parent folders of link dotfiles exist.
+  file:
+    path: "{{ (dotfiles_home ~ '/' ~ item) | dirname }}"
+    state: directory
+    follow: true
+  become: false
+  with_items: "{{ dotfiles_files }}"
 
-# - name: Ensure all configured dotfiles are links.
-#   command: "ls -F {{ dotfiles_home }}/{{ item }}"
-#   register: existing_dotfile_info
-#   failed_when: false
-#   check_mode: false
-#   changed_when: false
-#   with_items: "{{ dotfiles_files }}"
-
-# - name: Remove existing dotfiles file if a replacement is being linked.
-#   file:
-#     path: "{{ dotfiles_home }}/{{ dotfiles_files[item.0] }}"
-#     state: absent
-#   when: "'@' not in item.1.stdout"
-#   with_indexed_items: "{{ existing_dotfile_info.results }}"
-
-# - name: Ensure parent folders of link dotfiles exist.
-#   file:
-#     path: "{{ (dotfiles_home ~ '/' ~ item) | dirname }}"
-#     state: directory
-#     follow: true
-#   become: false
-#   with_items: "{{ dotfiles_files }}"
-
-# - name: Link dotfiles into home folder.
-#   file:
-#     src: "{{ dotfiles_repo_local_destination }}/{{ item }}"
-#     dest: "{{ dotfiles_home }}/{{ item }}"
-#     state: link
-#     mode: 0644
-#   become: false
-#   with_items: "{{ dotfiles_files }}"
+- name: Link dotfiles into home folder.
+  file:
+    src: "{{ dotfiles_repo_local_destination }}/{{ item }}"
+    dest: "{{ dotfiles_home }}/{{ item }}"
+    state: link
+    mode: 0644
+  become: false
+  with_items: "{{ dotfiles_files }}"
