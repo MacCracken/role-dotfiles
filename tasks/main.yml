@@ -24,8 +24,8 @@
 
 - name: Display Folder Results for testing purposes
   debug:
-    msg: "{{ item.path }}"
-  with_items: "{{ file_list }}"
+    msg: "{{ item }}"
+  with_items: "{{ file_list.path }}"
   when: found_matches.results | length > 0
   
 - name: Display Files Results for testing purposes
