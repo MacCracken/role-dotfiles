@@ -10,7 +10,7 @@
 
 - name: Get absolute folder path for local repo destination.
   command:
-    cmd: "readlink -f {{ dotfiles_repo_local_destination }}"
+    cmd: "readlink -f {{ item }}"
   with_items:
     - "{{ dotfiles_repo_local_destination }}"
     - "{{ dotfiles_home }}"
