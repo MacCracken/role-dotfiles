@@ -11,12 +11,16 @@
 - name: Get absolute folder path for local repo destination.
   command:
     cmd: "readlink -f {{ dotfiles_repo_local_destination }}"
-  register: destination_absolute_readlink
+  with_items:
+    - "{{ dotfiles_repo_local_destination }}"
+    - "{{ dotfiles_home }}"
+  register: absolute_readlinks
   changed_when: False
 
-- name: Set absolute destination as fact.
+- name: Set absolute facts.
   set_fact:
-    destination_abs: "{{ destination_absolute_readlink.stdout }}"
+    destination_abs: "{{ absolute_readlinks[0].stdout }}"
+    target_abs: "{{ absolute_readlinks[1].stdout }}"
   changed_when: False
 
 - name: Ensure dotfiles repository is cloned locally.
@@ -32,7 +36,7 @@
     state: latest
     package: "{{ item }}"
     dir: "{{ destination_abs }}"
-    target: "{{ lookup(dotfiles_home) }}"
+    target: "{{ target_abs }}"
   with_items: "{{ dotfiles_folders }}"
    
 # - name: Find dotfiles folder files.
