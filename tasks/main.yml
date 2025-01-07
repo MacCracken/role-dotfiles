@@ -30,7 +30,7 @@
 
 - name: Display Folder Results for testing purposes
   debug:
-    msg: "{{ item.path | replace(destination_absolute, '') }}"
+    msg: "{{destination_absolute}},{{ item.path | replace(destination_absolute, '') }}"
   with_items: "{{ file_list }}"
   when: found_matches.results | length > 0
   
