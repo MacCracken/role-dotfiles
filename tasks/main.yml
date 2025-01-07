@@ -22,9 +22,9 @@
 - name: Testing stow
   stow:
     state: latest
-    package: '{{ item }}'
+    package: "{{ item }}"
     dir: "{{ destination_abs }}"
-    target: "{{ lookup(dotfiles_home) }}"
+    target: "/Users/maccracken/test"
   with_items: "{{ dotfiles_folders }}"
    
 # - name: Find dotfiles folder files.
