@@ -21,11 +21,10 @@
 
 - name: Testing stow
   stow:
-    state: latest
+    state: supress
     package: '{{ item }}'
     dir: "{{ destination_abs }}"
     target: "{{ lookup(dotfiles_home) }}"
-    force: yes
   with_items: "{{ dotfiles_folders }}"
    
 # - name: Find dotfiles folder files.
