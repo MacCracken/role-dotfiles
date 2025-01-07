@@ -25,8 +25,7 @@
     package: "{{ item }}"
     dir: "{{ destination_abs }}"
     target: "/Users/maccracken/test"
-  with_items: #"{{ dotfiles_folders }}"
-    - zsh
+  with_items: "{{ dotfiles_folders }}"
    
 # - name: Find dotfiles folder files.
 #   ansible.builtin.find:
