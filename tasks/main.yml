@@ -4,7 +4,7 @@
 
 - name: Display Folder Results for testing purposes
   debug:
-    msg: "{{ dotfiles_repo_local_destination | dirname}}"
+    msg: "{{ dotfiles_repo_local_destination | realpath }}"
 
 # - name: Ensure dotfiles repository is cloned locally.
 #   git:
