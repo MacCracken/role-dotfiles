@@ -1,15 +1,10 @@
 #SPDX-License-Identifier: MIT-0
 ---
-- name: "Get dotfiles local destination absolute path."
-  ansible.builtin.find:
-    paths: "{{ dotfiles_repo_local_destination }}"
-    file_type: directory
-    recurse: no
-  register: destination_absolute
+
 
 - name: Display Folder Results for testing purposes
   debug:
-    msg: "{{ destination_absolute }}"
+    msg: "{{ dotfiles_repo_local_destination | dirname}}"
 
 # - name: Ensure dotfiles repository is cloned locally.
 #   git:
