@@ -36,12 +36,11 @@
 - name: test
   debug:
     msg: "{{ item.0.path | replace(\"{{destination_abs}}/{{item.1}}/\" , '') }}"
-  with_subelements: 
-    - "{{ file_list }}"
-    - "{{ dotfiles_folders }}"
+  with_items: "{{ file_list | zip(dotfiles_folders) | list }}"
   loop_control:
     label: "{{ item.path }}"
   when: found_matches.results | length > 0
+
   
 - name: Display Files Results for testing purposes
   debug:
