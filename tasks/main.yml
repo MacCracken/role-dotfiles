@@ -9,7 +9,7 @@
 
 - name: Display Folder Results for testing purposes
   debug:
-    msg: "{{ destination_absolute.path }}"
+    msg: "{{ destination_absolute.results[0].path }}"
 
 - name: Ensure dotfiles repository is cloned locally.
   git:
