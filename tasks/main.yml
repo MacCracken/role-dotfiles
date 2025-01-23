@@ -6,7 +6,6 @@
       - stow
       - git
     state: present
-  become: true
 
 - name: Get absolute folder path for local repo destination.
   command:
