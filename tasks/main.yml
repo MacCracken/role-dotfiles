@@ -7,6 +7,14 @@
       - git
     state: present
 
+- name: Ensure dotfiles repository is cloned locally.
+  git:
+    repo: "{{ dotfiles_repo }}"
+    dest: "{{ destination_abs }}"
+    version: "{{ dotfiles_repo_version }}"
+    accept_hostkey: "{{ dotfiles_repo_accept_hostkey }}"
+  become: false
+
 - name: Get absolute folder path for local repo destination.
   command:
     cmd: "readlink -f {{ item }}"
@@ -21,14 +29,6 @@
     destination_abs: "{{ absolute_readlinks.results[0].stdout }}"
     target_abs: "{{ absolute_readlinks.results[1].stdout }}"
   changed_when: False
-
-- name: Ensure dotfiles repository is cloned locally.
-  git:
-    repo: "{{ dotfiles_repo }}"
-    dest: "{{ destination_abs }}"
-    version: "{{ dotfiles_repo_version }}"
-    accept_hostkey: "{{ dotfiles_repo_accept_hostkey }}"
-  become: false
 
 - name: Using stow to link folders to dotfiles_home
   stow:
