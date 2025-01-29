@@ -11,7 +11,7 @@
   command:
     cmd: "readlink -f {{ item }}"
   with_items:
-    - "{{ dotfiles_repo_local_destination.rsplit('/', 1)[0] }}"
+    - "{{ dotfiles_repo_local_destination }}"
     - "{{ dotfiles_home }}"
   register: absolute_readlinks
   changed_when: False
